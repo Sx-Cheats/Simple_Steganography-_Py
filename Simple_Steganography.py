@@ -7,8 +7,7 @@ text_to_bin = lambda text: ''.join([format(ord(x),"08b") for x in text])
 
 def hide(msg:str,img)->str:
     img=Image.open(img)
-    msg=text_to_bin(base64.b64encode(msg.encode('utf-8')).decode()+'stgENDflag0')
-    
+    msg=text_to_bin(base64.b64encode(msg.encode('utf-8')).decode()+'stgENDflag0')  
     pixels=[*((img.convert("RGB")).getdata())]
     start= choice([*range(0, 255)]) if pixels.__len__() >= 255 else choice([*range(0, 127)]) if pixels.__len__() >= 127 else choice([*range(0, 64)]) if pixels.__len__() >= 64 else 0
     hidden=[(start,0,0)]
@@ -38,7 +37,6 @@ def view(img)->str:
                 chars=''
             chars += format(pixel[1][1],'b')[::-1][:1]
     return base64.b64decode(message.replace('stgENDflag0','')).decode()
-  
-print(__file__)
+
 path=hide("""You ve probably heard of Lorem Ipsum before – it’s the most-used dummy text excerpt out there. People use it because it has a fairly normal distribution of letters and words (making it look like normal English), but it’s also Latin, which means your average reader won’t get distracted by trying to read it. It’s perfect for showcasing design work as it should look when fleshed out with text, because it allows viewers to focus on the design work itself, instead of the text. It’s also a great way to showcase the functionality of programs like word processors, font types, and more.""",sys.path[0]+"\Simple_Steganography.jpg")
 print(view(path))
